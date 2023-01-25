@@ -24,7 +24,9 @@ def users_input( s, e ):
 
 # wrong_out
 def wrong_out( a, x, y ):
-    print( "Zahl ist nicht richtig, Sie liegen " + int( abs( x - y ) ) + " daneben" )
+    clear()
+    print( "Weiter viel Spass am Spielen.\nDebug: " + str( x ) + "\n" )
+    print( "Zahl ist nicht richtig, Sie liegen " + str( abs( x - y ) ) + " daneben" )
     print( "Sie haben noch " + str( a ) + " Versuche" )
 
 # try again
@@ -48,8 +50,8 @@ def start_game( s, e, t, r ):
 
     # get random number
     x = random_number( s, e )
-    print( x )
-
+    print( "Debug: " + str( x ) + "\n" )
+    
     # set tries as a
     a = t
 
@@ -83,10 +85,7 @@ def start_game( s, e, t, r ):
                 continue
             # if number does not fits the random number
             if y != x:
-                clear()
-                print( "Weiter viel Spass am Spielen.\nDebug: " + str( x ) + "\n" )
-                print( "Zahl ist nicht richtig, Sie liegen " + str( abs( x - y ) ) + " daneben" )
-                print( "Sie haben noch " + str( a ) + " Versuche" )
+                wrong_out( a, x, y )
                 a -= 1
                 continue
             # if number fits the random number
