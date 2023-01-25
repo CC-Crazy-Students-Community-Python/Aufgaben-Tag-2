@@ -29,6 +29,13 @@ def wrong_out( a, x, y ):
     print( "Zahl ist nicht richtig, Sie liegen " + str( abs( x - y ) ) + " daneben" )
     print( "Sie haben noch " + str( a ) + " Versuche" )
 
+# wrong_out
+def wrong_out_2( a, x, y ):
+    clear()
+    print( "Weiter viel Spass am Spielen.\nDebug: " + str( x ) + "\n" )
+    print( "Zahl ist nicht richtig, Sie liegen " + ( "darüber" if x > y else "darunter" ) )
+    print( "Sie haben noch " + str( a ) + " Versuche" )
+
 # try again
 def try_again( s, e, t, r ):
     c = input( "Wollen Sie nocheinmal spielen? [ j/n | y/n ]" )
@@ -51,7 +58,7 @@ def start_game( s, e, t, r ):
     # get random number
     x = random_number( s, e )
     print( "Debug: " + str( x ) + "\n" )
-    
+
     # set tries as a
     a = t
 
@@ -99,27 +106,8 @@ def start_game( s, e, t, r ):
             if int( y ) and int( y ) < s or int( y ) > e:
                 continue
             # if number is +/- 50
-            if y != x and abs( x - y ) > 50:
-                clear()
-                print( "Weiter viel Spass am Spielen.\nDebug: " + str( x ) + "\n" )
-                print( "Zahl ist nicht richtig, Sie liegen aber auch nicht nah dran" )
-                print( "Sie haben noch " + str( a ) + " Versuche" )
-                a -= 1
-                continue
-            # if number is between +/- 20 and +/- 50
-            elif y != x and abs( x - y ) < 50 and abs( x - y ) > 20:
-                clear()
-                print( "Weiter viel Spass am Spielen.\nDebug: " + str( x ) + "\n" )
-                print( "Zahl ist nicht richtig, sind aber schon recht nah dran" )
-                print( "Sie haben noch " + str( a ) + " Versuche" )
-                a -= 1
-                continue
-            # if number is +/- 10
-            elif y != x and abs( x - y ) < 20:
-                clear()
-                print( "Weiter viel Spass am Spielen.\nDebug: " + str( x ) + "\n" )
-                print( "Zahl ist nicht richtig, sind aber sehr nah dran" )
-                print( "Sie haben noch " + str( a ) + " Versuche" )
+            if y != x:
+                wrong_out_2( a, x, y )
                 a -= 1
                 continue
             # if number fits the random number
