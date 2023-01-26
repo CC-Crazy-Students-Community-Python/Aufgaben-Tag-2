@@ -1,5 +1,8 @@
 #
 # Spiel Aufgabe
+#       # funktiniert, unsauber version, da rekursive Funktionen
+#       # mit Hilfestellung ab dem xten verusch
+#       # unschön da singel char variabeln unausagekräftig sind
 #
 
 #
