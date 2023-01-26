@@ -1,12 +1,12 @@
-def check_input( input_value ):
-    if input_value.isdigit():
-        return int( input_value )
-    else:
-        input_value = input_value.lower()
-        match input_value:
-            case "hilfe" | "help" | "h" | "?" | "??" | "/?":
-                return 0
-            case "stop" | "halt" | "quit" | "exit" | "aus" | "/q":
-                return 1
-        return 2
-print( check_input( 1 ) )
+def check_try( temp_tries, help_tries, max_tries ):
+    match temp_tries:
+        case num if num in range( 1, help_tries ):
+            print( "1-" + str( help_tries ) )
+        case num if num in range( help_tries + 1, max_tries ):
+            print( str( help_tries + 1 ) + "-" + str( max_tries ) )
+        case other:
+            print( "uups" )
+
+ask_game = check_try( 2, 4, 9 )
+
+ask_game

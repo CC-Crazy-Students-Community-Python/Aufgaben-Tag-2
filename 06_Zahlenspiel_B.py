@@ -38,16 +38,22 @@ def check_input( user_num ):
         user_num = user_num.lower()
         match user_num:
             case "hilfe" | "help" | "h" | "?" | "??" | "/?":
-                return 0
-            case "stop" | "halt" | "quit" | "exit" | "aus" | "/q":
                 return 1
-        return 2
+            case "stop" | "halt" | "quit" | "exit" | "aus" | "/q":
+                return 2
+            case other:
+                return 0
 
 #
 # check the tries
-def check_try( temp_tries ):
-
-    return False
+def check_try( temp_tries, help_tries, max_tries ):
+    match temp_tries:
+        case num if num in range( 1, help_tries ):
+            return 1
+        case num if num in range( help_tries + 1, max_tries ):
+            return 2
+        case other:
+            return 0
 
 #
 # set help text
@@ -81,21 +87,21 @@ def right_out( random_num ):
 
 #
 # output if no tries left
-def tries_out( tmp_tries ):
+def game_over():
     clear()
     print( "\nLeider keine Versuche mehr.\nDas Spiel wird beendet" )
 
 #
-# start a new game
-def start_a_game( start_range, end_range, max_tries, help_tries ):
-    c = input( "Wollen Sie das Spiel spielen? [ j/n | y/n ]" )
-    if c == "y" or c == "yes" or c == "j" or c == "ja":
-        start_game( start_range, end_range, max_tries, help_tries )
+# start a game
+def ask_for_game( start_range, end_range, max_tries, help_tries, try_again ):
+    if try_again:
+        ask_again = input( "Wollen Sie nocheinmal spielen? [ j/n | y/n ]" ).lower()
+        start_again = start_game( start_range, end_range, max_tries, help_tries )
     else:
-        clear()
-        print( "Danke, Das Spiel wird beendet\n" )
+        ask_new = input( "Wollen Sie das Spiel spielen? [ j/n | y/n ]" ).lower()
+        start_new = start_game( start_range, end_range, max_tries, help_tries )
 
-#####do while schleife mit try again als gamestart
+#
 # try again
 def try_again( start_range, end_range, max_tries, help_tries ):
     c = input( "Wollen Sie nocheinmal spielen? [ j/n | y/n ]" )
@@ -131,7 +137,15 @@ def start_game( start_range, end_range, max_tries, help_tries ):
         check_input( user_num )
 
         # check tries
-        tries_out( tmp_tries )
+        match tries_out( tmp_tries ):
+            case 0:
+                print( "0 Versuche" )
+            case 1:
+                print( "1 Versuche" )
+            case 2:
+                game_over()
+                try_again()
+                break
         if a == 0:
             clear()
             print( "Leider keine Versuche mehr.\nDas Spiel wird beendet" )
