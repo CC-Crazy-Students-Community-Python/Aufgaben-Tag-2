@@ -30,11 +30,6 @@ def users_input( s, e ):
     return input( "\nBitte geben Sie eine Zahl zwischen " + str( s ) + " und " + str( e ) + " ein:" )
 
 #
-# check users input for int or char
-def check_input( s, e, a, r ):
-    return False
-
-#
 # output if wrong numbers
 def wrong_out_1( a, x, y ):
     clear()
@@ -47,12 +42,6 @@ def wrong_out_2( a, x, y ):
     print( "Weiter viel Spass am Spielen.\nDebug: " + str( x ) + "\n" )
     print( "Zahl ist nicht richtig, Sie liegen " + ( "darüber" if x < y else "darunter" ) )
     print( "Sie haben noch " + str( a ) + " Versuche" )
-
-#
-# check the tries
-def check_try():
-    return False
-
 
 #
 # try again
@@ -112,33 +101,20 @@ def start_game( s, e, t, r ):
             try_again( s, e, t, r )
             break
         # if only (tries - 4) tries left
-        elif a <= r:
+        else:
             # if number is inbetween the range
             if int( y ) and int( y ) < s or int( y ) > e:
                 continue
             # if number does not fits the random number
             if y != x:
-                wrong_out_1( a, x, y )
+                if a <= r:
+                    wrong_out_1( a, x, y )
+                else:
+                    wrong_out_2( a, x, y )
                 a -= 1
                 continue
             # if number fits the random number
             else:
-                clear()
-                print( "Bravo, Sie haben die Zahl " + str( x ) + " erraten" )
-                try_again( s, e, t, r )
-                break
-        # normal state, until only (tries - 4) tries left
-        else:
-            # if number is inbetween the range
-            if int( y ) and int( y ) < s or int( y ) > e:
-                continue
-            # if number is +/- 50
-            if y != x:
-                wrong_out_2( a, x, y )
-                a -= 1
-                continue
-            # if number fits the random number
-            elif y == x:
                 clear()
                 print( "Bravo, Sie haben die Zahl " + str( x ) + " erraten" )
                 try_again( s, e, t, r )
