@@ -59,7 +59,7 @@ def check_try( temp_tries, help_tries, max_tries ):
 # set help text
 def help_text():
     clear()
-    print( "In diesem Spiel wird eine zufällige Zahl generiert zwischen " + str( start_range ) + " und " + str( end_range ) + "." )
+    print( "\nIn diesem Spiel wird eine zufällige Zahl generiert zwischen " + str( start_range ) + " und " + str( end_range ) + "." )
     print( "Sie als Spieler müssen eine Zahl wählen und haben " + str( max_tries ) + " Versuche, um die richtige Zahl zu erraten." )
     print( "Als Hinweis bekommen Sie nach jeder Zahl gesagt, ob Sie über oder unter der Zahl liegen." )
     print( "Als Erleichterung bekommen Sie ab dem " + str( help_tries ) + ". Versuch auch gesagm, wie weit Sie neben der Zahl liegen." )
@@ -71,25 +71,31 @@ def wrong_out_default( a, random_num, user_num ):
     clear()
     print( "\nWeiter viel Spass am Spielen.\nDebug: " + str( random_num ) + "\n" )
     print( "Zahl ist nicht richtig, Sie liegen " + ( "darüber" if random_num < user_num else "darunter" ) )
-    print( "Sie haben noch " + str( a ) + " Versuche" )
+    print( "Sie haben noch " + str( a ) + " Versuche\n" )
 
 def wrong_out_with_help( a, random_num, user_num ):
     clear()
     print( "\nWeiter viel Spass am Spielen.\nDebug: " + str( random_num ) + "\n" )
     print( "Zahl ist nicht richtig, Sie liegen " + str( abs( random_num - user_num ) ) + " daneben" )
-    print( "Sie haben noch " + str( a ) + " Versuche" )
+    print( "Sie haben noch " + str( a ) + " Versuche\n" )
 
 #
 # output if right numbers
 def right_out( random_num ):
     clear()
-    print( "\nBravo, Sie haben die Zahl " + str( random_num ) + " erraten" )
+    print( "\nBravo, Sie haben die Zahl " + str( random_num ) + " erraten\n" )
+
+#
+# output if game should quit
+def quit_out():
+    clear()
+    print( "\nDanke, Das Spiel wird beendet\n" )
 
 #
 # output if no tries left
 def game_over():
     clear()
-    print( "\nLeider keine Versuche mehr.\nDas Spiel wird beendet" )
+    print( "\nLeider keine Versuche mehr.\nDas Spiel wird beendet\n" )
 
 #
 # start a game
