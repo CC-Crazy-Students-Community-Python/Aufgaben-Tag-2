@@ -31,47 +31,59 @@ def users_input( start_range, end_range ):
 
 #
 # check users input for int or char
-def check_input( input_value ):
-    if input_value.isdigit():
-        return int( input_value )
+def check_input( user_num ):
+    if user_num.isdigit():
+        return int( user_num )
     else:
-        input_value = input_value.lower()
-        match input_value:
+        user_num = user_num.lower()
+        match user_num:
             case "hilfe" | "help" | "h" | "?" | "??" | "/?":
                 return 0
             case "stop" | "halt" | "quit" | "exit" | "aus" | "/q":
                 return 1
         return 2
-print( check_input( "stop" ) )
+
+#
+# check the tries
+def check_try( temp_tries ):
+
+    return False
+
 #
 # set help text
 def help_text():
     clear()
     print( "In diesem Spiel wird eine zufällige Zahl generiert zwischen " + str( start_range ) + " und " + str( end_range ) + "." )
     print( "Sie als Spieler müssen eine Zahl wählen und haben " + str( max_tries ) + " Versuche, um die richtige Zahl zu erraten." )
-    print( "Als Hinweis bekommen Sie nach jeder Zahl gesagmax_tries, ob Sie nah dran sind oder nicht." )
-    print( "Als Erleichterung bekommen Sie ab dem " + str( help_tries ) + ". Versuch auch gesagmax_tries, ob Sie über oder unter der Zahl liegen." )
-    print( "\nAlso viel Spass am Spielen." )
-    start_a_game( start_range, end_range, max_tries, help_tries )
+    print( "Als Hinweis bekommen Sie nach jeder Zahl gesagt, ob Sie über oder unter der Zahl liegen." )
+    print( "Als Erleichterung bekommen Sie ab dem " + str( help_tries ) + ". Versuch auch gesagm, wie weit Sie neben der Zahl liegen." )
+    print( "\nAlso viel Spass am Spielen.\n" )
 
 #
 # output if wrong numbers
-def wrong_out_1( a, x, y ):
+def wrong_out_default( a, random_num, user_num ):
     clear()
-    print( "Weiter viel Spass am Spielen.\nDebug: " + str( x ) + "\n" )
-    print( "Zahl ist nicht richtig, Sie liegen " + str( abs( x - y ) ) + " daneben" )
+    print( "\nWeiter viel Spass am Spielen.\nDebug: " + str( random_num ) + "\n" )
+    print( "Zahl ist nicht richtig, Sie liegen " + ( "darüber" if random_num < user_num else "darunter" ) )
     print( "Sie haben noch " + str( a ) + " Versuche" )
 
-def wrong_out_2( a, x, y ):
+def wrong_out_with_help( a, random_num, user_num ):
     clear()
-    print( "Weiter viel Spass am Spielen.\nDebug: " + str( x ) + "\n" )
-    print( "Zahl ist nicht richtig, Sie liegen " + ( "darüber" if x < y else "darunter" ) )
+    print( "\nWeiter viel Spass am Spielen.\nDebug: " + str( random_num ) + "\n" )
+    print( "Zahl ist nicht richtig, Sie liegen " + str( abs( random_num - user_num ) ) + " daneben" )
     print( "Sie haben noch " + str( a ) + " Versuche" )
 
 #
-# check the tries
-def check_try():
-    return False
+# output if right numbers
+def right_out( random_num ):
+    clear()
+    print( "\nBravo, Sie haben die Zahl " + str( random_num ) + " erraten" )
+
+#
+# output if no tries left
+def tries_out( tmp_tries ):
+    clear()
+    print( "\nLeider keine Versuche mehr.\nDas Spiel wird beendet" )
 
 #
 # start a new game
@@ -98,45 +110,28 @@ def try_again( start_range, end_range, max_tries, help_tries ):
 def start_game( start_range, end_range, max_tries, help_tries ):
     #
     # get informations
-    clear()
-    print( "In diesem Spiel wird eine zufällige Zahl generiert zwischen " + str( s ) + " und " + str( s ) + "." )
-    print( "Sie als Spieler müssen eine Zahl wählen und haben " + str( t ) + " Versuche, um die richtige Zahl zu erraten." )
-    print( "Als Hinweis bekommen Sie nach jeder Zahl gesagmax_tries, ob Sie nah dran sind oder nicht." )
-    print( "Als Erleichterung bekommen Sie ab dem " + str( r ) + ". Versuch auch gesagmax_tries, ob Sie über oder unter der Zahl liegen." )
-    print( "\nAlso viel Spass am Spielen." )
+    help_text()
 
     #
     # get random number
-    x = random_number( start_range, end_range )
-    print( "Debug: " + str( x ) + "\n" )
+    random_num = random_number( start_range, end_range )
+    print( "Debug: " + str( random_num ) + "\n" )
 
     #
-    # set tries as a
-    a = t
+    # set tries as temporary
+    tmp_tries = max_tries
 
     #
     # loop for tries and answers
     while True:
-        y = users_input( start_range, end_range )
+        # user input
+        user_num = users_input( start_range, end_range )
 
-        #
-        # check if input is int or char
-        # ##### KLEIN SCHREIBWEISE für befehle
-       # check_input( start_range, end_range, a, help_tries )
-        if y.isdigit():
-            y = int( y )
-        else:
-            if y == "hilfe" or y == "help" or y == "?" or y == "??" or y == "/?":
-                start_game( start_range, end_range, a, help_tries )
-            elif y == "stop" or y == "quit" or y == "aus" or y == "/Q" or y == "exit":
-                clear()
-                print( "Danke, Das Spiel wird beendet" )
-                break
-            else:
-                continue
+        # check user input
+        check_input( user_num )
 
-        #
-        # if no other tries left
+        # check tries
+        tries_out( tmp_tries )
         if a == 0:
             clear()
             print( "Leider keine Versuche mehr.\nDas Spiel wird beendet" )
